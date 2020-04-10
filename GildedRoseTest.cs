@@ -12,7 +12,7 @@ namespace csharpcore
         
         [Fact]
         public void ReducesNormalItemSellInByOne()
-        {
+        { 
             IList<Item> items = new List<Item> { GetNormalItem(10, 9) };
             GildedRose app = new GildedRose(items);
             app.UpdateQuality();

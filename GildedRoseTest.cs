@@ -5,15 +5,15 @@ namespace csharpcore
 {
     public class GildedRoseUpdateQuality
     {
-        private IList<Item> GetNormalItem()
+        private Item GetNormalItem(int sellIn, int quality)
         {
-            return new List<Item> { new Item { Name = "foo", SellIn = 10, Quality = 9 } };
+            return new Item { Name = "foo", SellIn = sellIn, Quality = quality };
         }
         
         [Fact]
         public void ReducesNormalItemSellInByOne()
         {
-            IList<Item> items = GetNormalItem();
+            IList<Item> items = new List<Item> { GetNormalItem(10, 9) };
             GildedRose app = new GildedRose(items);
             app.UpdateQuality();
             Assert.Equal(9, items[0].SellIn);
@@ -22,7 +22,7 @@ namespace csharpcore
         [Fact]
         public void ReducesNormalItemQualityByOne()
         {
-            IList<Item> items = GetNormalItem();
+            IList<Item> items = new List<Item> { GetNormalItem(10, 9) };
             GildedRose app = new GildedRose(items);
             app.UpdateQuality();
             Assert.Equal(8, items[0].Quality);

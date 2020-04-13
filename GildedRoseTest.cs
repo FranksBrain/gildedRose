@@ -27,5 +27,14 @@ namespace csharpcore
             app.UpdateQuality();
             Assert.Equal(8, items[0].Quality);
         }
+
+        [Fact]
+        public void QualityDegradesTwiceAsFastOnceSellInPasses()
+        {
+            IList<Item> items = new List<Item> { GetNormalItem(0, 10) };
+            GildedRose app = new GildedRose(items);
+            app.UpdateQuality();
+            Assert.Equal(8, items[0].Quality);
+        }
     }
 }

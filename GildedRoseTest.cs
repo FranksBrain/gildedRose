@@ -50,5 +50,15 @@ namespace csharpcore
             CreateAppAndUpdateQuality(items);
             Assert.Equal(0, items[0].Quality);
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        public void QualityIsNeverNegativeWhenSellInIsZero(int quality)
+        {
+            IList<Item> items = new List<Item> { GetNormalItem(sellIn: 0, quality: quality) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(0, items[0].Quality);
+        }
     }
 }

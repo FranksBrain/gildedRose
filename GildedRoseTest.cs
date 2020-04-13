@@ -42,5 +42,13 @@ namespace csharpcore
             CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultQuality - 2, items[0].Quality);
         }
+
+        [Fact]
+        public void QualityIsNeverNegative()
+        {
+            IList<Item> items = new List<Item> { GetNormalItem(quality: 0) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(0, items[0].Quality);
+        }
     }
 }

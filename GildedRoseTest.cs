@@ -12,13 +12,18 @@ namespace csharpcore
         {
             return new Item { Name = "foo", SellIn = sellIn, Quality = quality };
         }
+
+        private void CreateAppAndUpdateQuality(IList<Item> items)
+        {
+            GildedRose app = new GildedRose(items);
+            app.UpdateQuality();
+        }
         
         [Fact]
         public void ReducesNormalItemSellInByOne()
         { 
             IList<Item> items = new List<Item> { GetNormalItem() };
-            GildedRose app = new GildedRose(items);
-            app.UpdateQuality();
+            CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultSellIn - 1, items[0].SellIn);
         }
 
@@ -26,8 +31,7 @@ namespace csharpcore
         public void ReducesNormalItemQualityByOne()
         {
             IList<Item> items = new List<Item> { GetNormalItem() };
-            GildedRose app = new GildedRose(items);
-            app.UpdateQuality();
+            CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultQuality - 1, items[0].Quality);
         }
 
@@ -35,8 +39,7 @@ namespace csharpcore
         public void QualityDegradesTwiceAsFastOnceSellInPasses()
         {
             IList<Item> items = new List<Item> { GetNormalItem(sellIn: 0) };
-            GildedRose app = new GildedRose(items);
-            app.UpdateQuality();
+            CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultQuality - 2, items[0].Quality);
         }
     }

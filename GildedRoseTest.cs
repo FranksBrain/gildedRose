@@ -74,6 +74,12 @@ namespace csharpcore
             Assert.Equal(_defaultQuality + 1, items[0].Quality);
         }
 
-      
+        [Fact]
+        public void ItemQualityIsNeverMoreThan50()
+        {
+            IList<Item> items = new List<Item> { GetAgedBrie(quality: 50) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(50, items[0].Quality);
+        }
     }
 }

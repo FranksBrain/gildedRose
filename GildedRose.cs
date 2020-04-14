@@ -4,83 +4,88 @@ namespace csharpcore
 {
     public class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        IList<Item> items;
+        public GildedRose(IList<Item> items)
         {
-            this.Items = Items;
+            this.items = items;
         }
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
-                if (Items[i].Name != ItemName.AGED_BRIE && Items[i].Name != ItemName.BACKSTAGE_PASSES)
+                UpdateItem(items[i]);
+            }
+        }
+
+        private void UpdateItem(Item item)
+        {
+            if (item.Name != ItemName.AGED_BRIE && item.Name != ItemName.BACKSTAGE_PASSES)
+            {
+                if (item.Quality > 0)
                 {
-                    if (Items[i].Quality > 0)
+                    if (item.Name != ItemName.SULFURAS)
                     {
-                        if (Items[i].Name != ItemName.SULFURAS)
+                        item.Quality = item.Quality - 1;
+                    }
+                }
+            }
+            else
+            {
+                if (item.Quality < 50)
+                {
+                    item.Quality = item.Quality + 1;
+
+                    if (item.Name == ItemName.BACKSTAGE_PASSES)
+                    {
+                        if (item.SellIn < 11)
                         {
-                            Items[i].Quality = Items[i].Quality - 1;
+                            if (item.Quality < 50)
+                            {
+                                item.Quality = item.Quality + 1;
+                            }
+                        }
+
+                        if (item.SellIn < 6)
+                        {
+                            if (item.Quality < 50)
+                            {
+                                item.Quality = item.Quality + 1;
+                            }
                         }
                     }
                 }
-                else
+            }
+
+            if (item.Name != ItemName.SULFURAS)
+            {
+                item.SellIn = item.SellIn - 1;
+            }
+
+            if (item.SellIn < 0)
+            {
+                if (item.Name != ItemName.AGED_BRIE)
                 {
-                    if (Items[i].Quality < 50)
+                    if (item.Name != ItemName.BACKSTAGE_PASSES)
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == ItemName.BACKSTAGE_PASSES)
+                        if (item.Quality > 0)
                         {
-                            if (Items[i].SellIn < 11)
+                            if (item.Name != ItemName.SULFURAS)
                             {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
+                                item.Quality = item.Quality - 1;
                             }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (Items[i].Name != ItemName.SULFURAS)
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != ItemName.AGED_BRIE)
-                    {
-                        if (Items[i].Name != ItemName.BACKSTAGE_PASSES)
-                        {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != ItemName.SULFURAS)
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
                         }
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
+                        item.Quality = item.Quality - item.Quality;
+                    }
+                }
+                else
+                {
+                    if (item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
                     }
                 }
             }

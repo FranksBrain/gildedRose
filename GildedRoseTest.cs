@@ -108,12 +108,26 @@ namespace csharpcore
             Assert.Equal(_defaultSellIn, items[0].SellIn);
         }
 
-        [Fact]
-        public void BackstageQualityIncreasesByOneAsSellInMoreThanTenApproachesZero()
+        [Theory]
+        [InlineData(30)]
+        [InlineData(13)]
+        [InlineData(11)]
+        public void BackstageQualityIncreasesByOneAsSellInMoreThanTenApproachesTen(int sellIn)
         {
-            IList<Item> items = new List<Item> { GetBackstagePass(sellIn: 11) };
+            IList<Item> items = new List<Item> { GetBackstagePass(sellIn: sellIn) };
             CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultQuality + 1, items[0].Quality);
+        }
+
+        [Theory]
+        [InlineData(10)]
+        [InlineData(9)]
+        [InlineData(6)]
+        public void BackstageQualityIncreasesByTwoAsSellInLessThanTenApproachesFive(int sellIn)
+        {
+            IList<Item> items = new List<Item> { GetBackstagePass(sellIn: sellIn) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality + 2, items[0].Quality);
         }
     }
 }

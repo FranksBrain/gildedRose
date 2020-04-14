@@ -18,15 +18,20 @@ namespace csharpcore
             return new Item { Name = ItemName.AGED_BRIE, SellIn = sellIn, Quality = quality };
         }
 
+        private Item GetSulfuras(int sellIn = _defaultSellIn, int quality = _defaultQuality)
+        {
+            return new Item { Name = ItemName.SULFURAS, SellIn = sellIn, Quality = quality };
+        }
+
         private void CreateAppAndUpdateQuality(IList<Item> items)
         {
             GildedRose app = new GildedRose(items);
             app.UpdateQuality();
         }
-        
+
         [Fact]
         public void ReducesNormalItemSellInByOne()
-        { 
+        {
             IList<Item> items = new List<Item> { GetNormalItem() };
             CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultSellIn - 1, items[0].SellIn);
@@ -80,6 +85,14 @@ namespace csharpcore
             IList<Item> items = new List<Item> { GetAgedBrie(quality: 50) };
             CreateAppAndUpdateQuality(items);
             Assert.Equal(50, items[0].Quality);
+        }
+
+        [Fact]
+        public void SulfurasQualityNeverChanges()
+        {
+            IList<Item> items = new List<Item> { GetSulfuras() };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality, items[0].Quality);
         }
     }
 }

@@ -5,6 +5,8 @@ namespace csharpcore
     public class GildedRose
     {
         IList<Item> items;
+        private List<IRule> _rules = new List<IRule>();
+
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -12,9 +14,17 @@ namespace csharpcore
 
         public void UpdateQuality()
         {
+            _rules.Add(new NormalItemRule());
+            _rules.Add(new SellInPassedRule());
+            _rules.Add(new QualityIsNeverNegativeRule());
+            
             for (var i = 0; i < items.Count; i++)
             {
-                UpdateItem(items[i]);
+                foreach (var rule in _rules)
+                {
+                    rule.Eval(items[i]);
+                }
+                //UpdateItem(items[i]);
             }
         }
 

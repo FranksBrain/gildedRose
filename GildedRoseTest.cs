@@ -23,6 +23,11 @@ namespace csharpcore
             return new Item { Name = ItemName.SULFURAS, SellIn = sellIn, Quality = quality };
         }
 
+        private Item GetBackstagePass(int sellIn = _defaultSellIn, int quality = _defaultQuality)
+        {
+            return new Item { Name = ItemName.BACKSTAGE_PASSES, SellIn = sellIn, Quality = quality };
+        }
+
         private void CreateAppAndUpdateQuality(IList<Item> items)
         {
             GildedRose app = new GildedRose(items);
@@ -101,6 +106,14 @@ namespace csharpcore
             IList<Item> items = new List<Item> { GetSulfuras() };
             CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultSellIn, items[0].SellIn);
+        }
+
+        [Fact]
+        public void BackstageQualityIncreasesByOneAsSellInMoreThanTenApproachesZero()
+        {
+            IList<Item> items = new List<Item> { GetBackstagePass(sellIn: 11) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality + 1, items[0].Quality);
         }
     }
 }

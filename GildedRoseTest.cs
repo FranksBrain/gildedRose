@@ -94,5 +94,13 @@ namespace csharpcore
             CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultQuality, items[0].Quality);
         }
+
+        [Fact]
+        public void SulfurasSellInNeverChanges()
+        {
+            IList<Item> items = new List<Item> { GetSulfuras() };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultSellIn, items[0].SellIn);
+        }
     }
 }

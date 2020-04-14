@@ -13,6 +13,11 @@ namespace csharpcore
             return new Item { Name = "foo", SellIn = sellIn, Quality = quality };
         }
 
+        private Item GetAgedBrie(int sellIn = _defaultSellIn, int quality = _defaultQuality)
+        {
+            return new Item { Name = ItemName.AGED_BRIE, SellIn = sellIn, Quality = quality };
+        }
+
         private void CreateAppAndUpdateQuality(IList<Item> items)
         {
             GildedRose app = new GildedRose(items);
@@ -60,5 +65,15 @@ namespace csharpcore
             CreateAppAndUpdateQuality(items);
             Assert.Equal(0, items[0].Quality);
         }
+
+        [Fact]
+        public void AgedBrieQualityIncreasesAsItGetsOlder()
+        {
+            IList<Item> items = new List<Item> { GetAgedBrie() };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality + 1, items[0].Quality);
+        }
+
+      
     }
 }

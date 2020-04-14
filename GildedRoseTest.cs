@@ -129,5 +129,16 @@ namespace csharpcore
             CreateAppAndUpdateQuality(items);
             Assert.Equal(_defaultQuality + 2, items[0].Quality);
         }
+
+        [Theory]
+        [InlineData(5)]
+        [InlineData(3)]
+        [InlineData(1)]
+        public void BackstageQualityIncreasesByThreeAsSellInLessThanFiveApproachesZero(int sellIn)
+        {
+            IList<Item> items = new List<Item> { GetBackstagePass(sellIn: sellIn) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality + 3, items[0].Quality);
+        }
     }
 }

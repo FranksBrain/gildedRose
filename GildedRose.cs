@@ -40,7 +40,8 @@ namespace csharpcore
                 case ItemName.SULFURAS:
                     break;
                 case ItemName.BACKSTAGE_PASSES:
-                    new BackstagePassesRule().Eval(item);
+                    new BackstagePassesMoreThan10DaysRule().Eval(item);
+                    new BackstagePassesLessThan10MoreThan5DaysRule().Eval(item);
                     break;
                 default:
                     new NormalItemRule().Eval(item);

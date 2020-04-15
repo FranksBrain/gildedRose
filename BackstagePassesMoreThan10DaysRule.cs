@@ -1,6 +1,6 @@
 ﻿namespace csharpcore
 {
-    public class BackstagePassesRule : IRule
+    public class BackstagePassesMoreThan10DaysRule : IRule
     {
         public void Eval(Item item)
         {

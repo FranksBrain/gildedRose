@@ -14,18 +14,8 @@ namespace csharpcore
 
         public void UpdateQuality()
         {
-            _rules.Add(new AgedBrieRule());
-            _rules.Add(new NormalItemRule());
-            _rules.Add(new SellInPassedRule());
-            _rules.Add(new QualityIsNeverNegativeRule());
-
             for (var i = 0; i < items.Count; i++)
             {
-
-                //foreach (var rule in _rules)
-                //{
-                //    //rule.Eval(items[i]);
-                //}
                 UpdateItem(items[i]);
             }
         }
@@ -34,15 +24,19 @@ namespace csharpcore
         {
             switch (item.Name)
             {
+                case ItemName.SULFURAS:
+                    break;
                 case ItemName.AGED_BRIE:
                     new AgedBrieRule().Eval(item);
                     break;
-                case ItemName.SULFURAS:
-                    break;
                 case ItemName.BACKSTAGE_PASSES:
-                    new BackstagePassesMoreThan10DaysRule().Eval(item);
-                    new BackstagePassesLessThan10MoreThan5DaysRule().Eval(item);
+                    new BackstagePassesExpiredRule().Eval(item);
                     new BackstagePassesLessThan5DaysButNotExpiredRule().Eval(item);
+                    new BackstagePassesLessThan10MoreThan5DaysRule().Eval(item);
+                    new BackstagePassesMoreThan10DaysRule().Eval(item);
+                    
+                    
+                    
                     break;
                 default:
                     new NormalItemRule().Eval(item);

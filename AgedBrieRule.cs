@@ -4,8 +4,12 @@
     {
         public void Eval(Item item)
         {
-            if(item.Name == ItemName.AGED_BRIE){
-                item.Quality += 1;
+            if (item.Quality < 50)
+            {
+                if (item.Name == ItemName.AGED_BRIE)
+                {
+                    item.Quality += 1;
+                }
             }
         }
     }

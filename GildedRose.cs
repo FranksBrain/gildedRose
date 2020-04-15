@@ -42,6 +42,7 @@ namespace csharpcore
                 case ItemName.BACKSTAGE_PASSES:
                     new BackstagePassesMoreThan10DaysRule().Eval(item);
                     new BackstagePassesLessThan10MoreThan5DaysRule().Eval(item);
+                    new BackstagePassesLessThan5DaysButNotExpiredRule().Eval(item);
                     break;
                 default:
                     new NormalItemRule().Eval(item);

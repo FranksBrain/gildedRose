@@ -37,6 +37,8 @@ namespace csharpcore
                 case ItemName.AGED_BRIE:
                     new AgedBrieRule().Eval(item);
                     break;
+                case ItemName.SULFURAS:
+                    break;
                 default:
                     new NormalItemRule().Eval(item);
                     break;

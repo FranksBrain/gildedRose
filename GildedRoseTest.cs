@@ -28,6 +28,11 @@ namespace csharpcore
             return new Item { Name = ItemName.BACKSTAGE_PASSES, SellIn = sellIn, Quality = quality };
         }
 
+        private Item GetConjuredItem(int sellIn = _defaultSellIn, int quality = _defaultQuality)
+        {
+            return new Item { Name = ItemName.CONJURED_ITEM, SellIn = sellIn, Quality = quality };
+        }
+
         private void CreateAppAndUpdateQuality(IList<Item> items)
         {
             GildedRose app = new GildedRose(items);
@@ -147,6 +152,22 @@ namespace csharpcore
             IList<Item> items = new List<Item> { GetBackstagePass(sellIn: 0) };
             CreateAppAndUpdateQuality(items);
             Assert.Equal(0, items[0].Quality);
+        }
+
+        [Fact]
+        public void ConjuredItemsDegradeTwiceAsFast()
+        {
+            IList<Item> items = new List<Item> { GetConjuredItem() };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality -2, items[0].Quality);
+        }
+
+        [Fact]
+        public void ExpiredConjuredItemDecreasesByFour()
+        {
+            IList<Item> items = new List<Item> { GetConjuredItem( sellIn: 0) };
+            CreateAppAndUpdateQuality(items);
+            Assert.Equal(_defaultQuality - 4, items[0].Quality);
         }
     }
 }

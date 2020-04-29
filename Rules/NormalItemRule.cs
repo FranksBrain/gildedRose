@@ -4,7 +4,7 @@
     {
         public void Eval(Item item)
         {
-            if (item.Name != ItemName.AGED_BRIE && item.Name != ItemName.SULFURAS && item.Name != ItemName.BACKSTAGE_PASSES)
+            if (item.Name != ItemName.AGED_BRIE && item.Name != ItemName.SULFURAS && item.Name != ItemName.BACKSTAGE_PASSES && !item.Name.Contains("Conjured"))
             {
                 if (item.Quality >= 0)
                 {
